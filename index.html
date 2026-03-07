@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StackPoint IT | Managed IT & Cybersecurity Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #1a8fd1;
+      --secondary-color: #2b3a4a;
+      --accent-color: #00c8ff;
+      --dark-bg: #070d14;
+      --dark-surface: #0d1825;
+      --dark-card: #0f1e2e;
+      --dark-border: #1a3050;
+      --text-primary: #e8f4ff;
+      --text-muted: #7ba3c0;
+      --glow: rgba(26, 143, 209, 0.35);
+      --glow-accent: rgba(0, 200, 255, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .font-display {
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── BACKGROUND GRID ─── */
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(26, 143, 209, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 143, 209, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    .noise::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── NAVBAR ─── */
+    #navbar {
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+    }
+    #navbar.scrolled {
+      background: rgba(7, 13, 20, 0.92);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--dark-border), 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      transition: width 0.3s;
+      border-radius: 2px;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ─── HERO ─── */
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .hero-glow-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,143,209,0.18) 0%, transparent 70%);
+      top: -100px; left: -200px;
+    }
+    .hero-glow-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,200,255,0.1) 0%, transparent 70%);
+      top: 100px; right: -150px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color) 60%, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color), #0e6fa8);
+      color: #fff;
+      border: none;
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      box-shadow: 0 4px 20px var(--glow);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(26,143,209,0.5);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent-color);
+      border: 1.5px solid var(--accent-color);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .btn-outline:hover {
+      background: rgba(0,200,255,0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px var(--glow-accent);
+    }
+
+    /* ─── CARDS ─── */
+    .service-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,143,209,0.06), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary-color);
+      box-shadow: 0 12px 40px rgba(26,143,209,0.2), 0 0 0 1px rgba(26,143,209,0.3);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(26,143,209,0.2), rgba(0,200,255,0.1));
+      border: 1px solid rgba(26,143,209,0.4);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      color: var(--accent-color);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-card:hover .service-icon {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px var(--glow-accent);
+    }
+
+    /* ─── COMPLIANCE TICKER ─── */
+    .compliance-ticker {
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+    }
+    .ticker-track {
+      display: flex;
+      gap: 2.5rem;
+      animation: ticker 22s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .compliance-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1.4rem;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 50px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      transition: border-color 0.2s;
+      cursor: default;
+    }
+    .compliance-badge:hover { border-color: var(--primary-color); }
+    .compliance-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      box-shadow: 0 0 8px var(--accent-color);
+      flex-shrink: 0;
+    }
+
+    /* ─── PRICING ─── */
+    .pricing-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 20px;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .pricing-card.featured {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 1px var(--primary-color), 0 20px 60px rgba(26,143,209,0.25);
+    }
+    .pricing-card.featured:hover {
+      box-shadow: 0 0 0 1px var(--accent-color), 0 24px 70px rgba(26,143,209,0.4);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: 18px; right: -28px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      padding: 4px 36px;
+      transform: rotate(40deg);
+      text-transform: uppercase;
+    }
+
+    .tier-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .check-item { display: flex; align-items: flex-start; gap: 0.6rem; }
+    .check-item i { color: var(--accent-color); margin-top: 3px; flex-shrink: 0; }
+
+    /* ─── STAT COUNTER ─── */
+    .stat-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      text-align: center;
+      padding: 2rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .stat-card:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 30px var(--glow);
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      padding: 0.3rem 1rem;
+      background: rgba(0,200,255,0.08);
+      border: 1px solid rgba(0,200,255,0.25);
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ─── DIVIDER ─── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--dark-border), transparent);
+    }
+
+    /* ─── MOBILE MENU ─── */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #mobile-menu.open { max-height: 500px; }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+
+    /* ─── HEXAGON BG PATTERN ─── */
+    .hex-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33L28 66zm0-6l22-13V23L28 10 6 23v24l22 13z' fill='none' stroke='rgba(26,143,209,0.07)' stroke-width='1'/%3E%3C/svg%3E");
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* ─── FOOTER ─── */
+    footer a { color: var(--text-muted); transition: color 0.2s; }
+    footer a:hover { color: var(--accent-color); }
+
+    /* ─── CUSTOM SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--dark-border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
+
+    /* ─── RESOURCE CARDS ─── */
+    .resource-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .resource-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-color);
+      box-shadow: 0 10px 30px var(--glow);
+    }
+
+    /* ─── CTA BAND ─── */
+    .cta-band {
+      background: linear-gradient(135deg, #0b1c2e 0%, #0d2240 50%, #0b1c2e 100%);
+      border-top: 1px solid var(--dark-border);
+      border-bottom: 1px solid var(--dark-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 200px;
+      background: radial-gradient(ellipse, rgba(26,143,209,0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--text-primary);
+      transition: transform 0.3s, opacity 0.3s;
+      border-radius: 2px;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  </style>
+</head>
+<body class="bg-grid noise">
+
+<!-- ════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════ -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-3 group">
+      <img src="./assets/logo.png" alt="StackPoint IT" class="h-10 w-auto transition-transform group-hover:scale-105" />
+      <span class="font-display text-xl font-bold tracking-wide hidden sm:block">
+        Stack<span class="text-gradient">Point</span> IT
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden lg:flex items-center gap-8">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#compliance" class="nav-link">Compliance</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#resources" class="nav-link">Resources</a>
+    </nav>
+
+    <div class="hidden lg:flex items-center gap-4">
+      <a href="mailto:support@stackpointit.com" class="nav-link text-sm">support@stackpointit.com</a>
+      <a href="#pricing" class="btn-primary px-5 py-2.5 rounded-lg text-sm cursor-pointer">Get Started</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="hamburger lg:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="lg:hidden bg-[#0a1520] border-t border-[var(--dark-border)]">
+    <div class="flex flex-col px-6 py-4 gap-4">
+      <a href="#services" class="nav-link text-base py-1">Services</a>
+      <a href="#compliance" class="nav-link text-base py-1">Compliance</a>
+      <a href="#pricing" class="nav-link text-base py-1">Pricing</a>
+      <a href="#resources" class="nav-link text-base py-1">Resources</a>
+      <div class="section-divider my-1"></div>
+      <a href="mailto:support@stackpointit.com" class="text-sm" style="color:var(--text-muted)">support@stackpointit.com</a>
+      <a href="#pricing" class="btn-primary px-5 py-2.5 rounded-lg text-sm text-center">Get Started</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section id="hero" class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+  <div class="hex-pattern"></div>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 w-full">
+    <div class="max-w-4xl">
+      <div class="section-label reveal">
+        <i class="fas fa-shield-halved text-xs"></i>
+        Managed IT & Cybersecurity
+      </div>
+
+      <h1 class="hero-title font-display font-bold mb-6 reveal reveal-delay-1">
+        Fortify Your<br/>
+        <span class="text-gradient">IT Infrastructure.</span><br/>
+        <span style="color:var(--text-muted); font-weight:500;">Stay Ahead of Every Threat.</span>
+      </h1>
+
+      <p class="text-lg max-w-2xl mb-10 leading-relaxed reveal reveal-delay-2" style="color:var(--text-muted)">
+        StackPoint IT delivers enterprise-grade managed services, autonomous endpoint security, and compliance assurance — so your team can focus on what matters most while we secure the perimeter.
+      </p>
+
+      <div class="flex flex-wrap gap-4 reveal reveal-delay-3">
+        <a href="#pricing" class="btn-primary px-8 py-3.5 rounded-xl text-base inline-flex items-center gap-2">
+          <i class="fas fa-layer-group text-sm"></i> View Pricing
+        </a>
+        <a href="mailto:support@stackpointit.com?subject=Free Vulnerability Assessment Request" class="btn-outline px-8 py-3.5 rounded-xl text-base inline-flex items-center gap-2">
+          <i class="fas fa-magnifying-glass-chart text-sm"></i> Free Vulnerability Assessment
+        </a>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="flex flex-wrap gap-8 mt-16 reveal reveal-delay-4">
+        <div>
+          <div class="font-display text-3xl font-bold text-gradient">99.9%</div>
+          <div class="text-xs uppercase tracking-widest mt-1" style="color:var(--text-muted)">Uptime SLA</div>
+        </div>
+        <div class="w-px" style="background:var(--dark-border)"></div>
+        <div>
+          <div class="font-display text-3xl font-bold text-gradient">500+</div>
+          <div class="text-xs uppercase tracking-widest mt-1" style="color:var(--text-muted)">Apps Patched</div>
+        </div>
+        <div class="w-px" style="background:var(--dark-border)"></div>
+        <div>
+          <div class="font-display text-3xl font-bold text-gradient">24/7</div>
+          <div class="text-xs uppercase tracking-widest mt-1" style="color:var(--text-muted)">Monitoring</div>
+        </div>
+        <div class="w-px" style="background:var(--dark-border)"></div>
+        <div>
+          <div class="font-display text-3xl font-bold text-gradient">&lt; 4hr</div>
+          <div class="text-xs uppercase tracking-widest mt-1" style="color:var(--text-muted)">Response Time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative terminal widget -->
+  <div class="absolute right-6 bottom-16 hidden xl:block reveal reveal-delay-5" style="width:340px">
+    <div style="background:var(--dark-card); border:1px solid var(--dark-border); border-radius:14px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.6)">
+      <div class="flex items-center gap-2 px-4 py-3" style="background:#0a1520; border-bottom:1px solid var(--dark-border)">
+        <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></span>
+        <span style="width:10px;height:10px;border-radius:50%;background:#ffbd2e;"></span>
+        <span style="width:10px;height:10px;border-radius:50%;background:#28c840;"></span>
+        <span class="text-xs ml-2 font-mono" style="color:var(--text-muted)">endpoint-monitor.sh</span>
+      </div>
+      <div class="p-5 font-mono text-xs space-y-2" style="color:#a0c8e0;">
+        <div><span style="color:#28c840">✓</span> <span style="color:#64a0c0">Patch scan complete</span> — 0 critical</div>
+        <div><span style="color:#28c840">✓</span> <span style="color:#64a0c0">Endpoint compliance</span> — 98.2%</div>
+        <div><span style="color:var(--accent-color)">⟳</span> <span style="color:#64a0c0">Deploying update</span> — ETA 22s</div>
+        <div><span style="color:#ffbd2e">⚠</span> <span style="color:#64a0c0">Vuln detected</span> — auto-remediation queued</div>
+        <div><span style="color:#28c840">✓</span> <span style="color:#64a0c0">Remote session</span> — AES-256 secured</div>
+        <div class="flex items-center gap-1 mt-3 pt-3" style="border-top:1px solid var(--dark-border)">
+          <span style="color:var(--primary-color)">$</span>
+          <span id="typed-text" style="color:var(--accent-color)"></span>
+          <span id="cursor" style="color:var(--accent-color); animation: blink 1s step-end infinite;">█</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ════════════════════════════════════════════
+     CORE IT SERVICES
+════════════════════════════════════════════ -->
+<section id="services" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <div class="section-label reveal">Core Services</div>
+      <h2 class="font-display text-5xl font-bold mb-4 reveal reveal-delay-1">
+        Comprehensive Managed <span class="text-gradient">IT Solutions</span>
+      </h2>
+      <p class="max-w-2xl mx-auto text-lg reveal reveal-delay-2" style="color:var(--text-muted)">
+        From patch management to autonomous endpoint protection, our unified platform keeps your organization secure, compliant, and running at peak efficiency.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+      <div class="service-card rounded-2xl p-7 reveal reveal-delay-1">
+        <div class="service-icon mb-5"><i class="fas fa-arrows-rotate"></i></div>
+        <h3 class="font-display text-2xl font-bold mb-3">Cross-OS Patch Management</h3>
+        <p style="color:var(--text-muted); line-height:1.7">
+          Unified patching across Windows, macOS, and Linux from a single pane of glass. Eliminate gaps, enforce policies, and maintain a hardened baseline across every endpoint — regardless of operating system.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Windows</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">macOS</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Linux</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card rounded-2xl p-7 reveal reveal-delay-2">
+        <div class="service-icon mb-5"><i class="fas fa-cubes"></i></div>
+        <h3 class="font-display text-2xl font-bold mb-3">Third-Party App Patching</h3>
+        <p style="color:var(--text-muted); line-height:1.7">
+          Automated updates for hundreds of business-critical applications — browsers, productivity suites, developer tools, and more. Never let an unpatched app become your next vulnerability.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">500+ Apps</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Automated</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card rounded-2xl p-7 reveal reveal-delay-3">
+        <div class="service-icon mb-5"><i class="fas fa-radar"></i></div>
+        <h3 class="font-display text-2xl font-bold mb-3">Vulnerability Management</h3>
+        <p style="color:var(--text-muted); line-height:1.7">
+          Real-time detection and prioritized remediation of software flaws across your environment. Our continuous scanning engine ensures zero-day threats are identified and neutralized before they can be exploited.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Real-Time</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">CVE Tracking</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="service-card rounded-2xl p-7 reveal reveal-delay-4">
+        <div class="service-icon mb-5"><i class="fas fa-cloud-arrow-up"></i></div>
+        <h3 class="font-display text-2xl font-bold mb-3">Software Deployment</h3>
+        <p style="color:var(--text-muted); line-height:1.7">
+          Cloud-native remote application distribution across any endpoint, anywhere. Deploy, update, or remove software silently in the background — no user disruption, no on-premise infrastructure required.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Cloud-Native</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Silent Deploy</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="service-card rounded-2xl p-7 reveal reveal-delay-5">
+        <div class="service-icon mb-5"><i class="fas fa-microchip"></i></div>
+        <h3 class="font-display text-2xl font-bold mb-3">Autonomous Endpoint Management</h3>
+        <p style="color:var(--text-muted); line-height:1.7">
+          Self-healing endpoints that auto-configure, self-remediate, and enforce security baselines without manual intervention. Deploy policies, enforce configurations, and resolve issues automatically at scale.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Self-Healing</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Zero-Touch</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="service-card rounded-2xl p-7 reveal reveal-delay-6">
+        <div class="service-icon mb-5"><i class="fas fa-lock"></i></div>
+        <h3 class="font-display text-2xl font-bold mb-3">Secure Remote Access</h3>
+        <p style="color:var(--text-muted); line-height:1.7">
+          MFA-enforced, AES-256 encrypted remote desktop support for technicians and end-users alike. Every session is logged, audited, and protected — enabling fast resolution without sacrificing security posture.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">MFA</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">AES-256</span>
+          <span class="text-xs px-3 py-1 rounded-full font-medium" style="background:rgba(26,143,209,0.12);color:var(--accent-color);border:1px solid rgba(26,143,209,0.25)">Audited</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ════════════════════════════════════════════
+     COMPLIANCE TICKER
+════════════════════════════════════════════ -->
+<section id="compliance" class="py-20 relative overflow-hidden">
+  <div style="background:linear-gradient(180deg, transparent, rgba(26,143,209,0.05), transparent); position:absolute; inset:0; pointer-events:none;"></div>
+
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <div class="section-label reveal">Compliance as a Service</div>
+      <h2 class="font-display text-5xl font-bold mb-4 reveal reveal-delay-1">
+        Built-In <span class="text-gradient">Regulatory Compliance</span>
+      </h2>
+      <p class="max-w-2xl mx-auto text-lg reveal reveal-delay-2" style="color:var(--text-muted)">
+        Our managed services are engineered to satisfy the most rigorous regulatory frameworks, continuously — not just at audit time.
+      </p>
+    </div>
+
+    <!-- Ticker -->
+    <div class="compliance-ticker py-4 reveal reveal-delay-3">
+      <div class="ticker-track" id="ticker">
+        <!-- First set -->
+        <div class="compliance-badge"><span class="compliance-dot"></span>PCI DSS</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>HIPAA</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>SOC 2 Type II</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>CIS CSC</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>GLBA / FFIEC</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>NIST CSF</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>ISO 27001</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>CMMC</div>
+        <!-- Duplicate set for seamless loop -->
+        <div class="compliance-badge"><span class="compliance-dot"></span>PCI DSS</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>HIPAA</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>SOC 2 Type II</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>CIS CSC</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>GLBA / FFIEC</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>NIST CSF</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>ISO 27001</div>
+        <div class="compliance-badge"><span class="compliance-dot"></span>CMMC</div>
+      </div>
+    </div>
+
+    <!-- Compliance Detail Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-12">
+      <div class="service-card rounded-xl p-5 text-center reveal reveal-delay-1">
+        <div class="font-display text-2xl font-bold mb-1" style="color:var(--accent-color)">PCI DSS</div>
+        <p class="text-xs leading-relaxed" style="color:var(--text-muted)">Protect cardholder data and maintain a secure payment processing environment.</p>
+      </div>
+      <div class="service-card rounded-xl p-5 text-center reveal reveal-delay-2">
+        <div class="font-display text-2xl font-bold mb-1" style="color:var(--accent-color)">HIPAA</div>
+        <p class="text-xs leading-relaxed" style="color:var(--text-muted)">Safeguard electronic protected health information with continuous technical controls.</p>
+      </div>
+      <div class="service-card rounded-xl p-5 text-center reveal reveal-delay-3">
+        <div class="font-display text-2xl font-bold mb-1" style="color:var(--accent-color)">SOC 2</div>
+        <p class="text-xs leading-relaxed" style="color:var(--text-muted)">Demonstrate trust by meeting security, availability, and confidentiality criteria.</p>
+      </div>
+      <div class="service-card rounded-xl p-5 text-center reveal reveal-delay-4">
+        <div class="font-display text-2xl font-bold mb-1" style="color:var(--accent-color)">CIS CSC</div>
+        <p class="text-xs leading-relaxed" style="color:var(--text-muted)">Implement prioritized security controls proven to stop the most common attacks.</p>
+      </div>
+      <div class="service-card rounded-xl p-5 text-center reveal reveal-delay-5">
+        <div class="font-display text-2xl font-bold mb-1" style="color:var(--accent-color)">GLBA</div>
+        <p class="text-xs leading-relaxed" style="color:var(--text-muted)">Meet financial industry data privacy requirements with automated policy enforcement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ════════════════════════════════════════════
+     PRICING
+════════════════════════════════════════════ -->
+<section id="pricing" class="py-24 relative">
+  <div class="hex-pattern opacity-30"></div>
+  <div class="max-w-7xl mx-auto px-6 relative">
+
+    <div class="text-center mb-16">
+      <div class="section-label reveal">Service Packages</div>
+      <h2 class="font-display text-5xl font-bold mb-4 reveal reveal-delay-1">
+        Transparent <span class="text-gradient">Tiered Pricing</span>
+      </h2>
+      <p class="max-w-2xl mx-auto text-lg reveal reveal-delay-2" style="color:var(--text-muted)">
+        Choose the protection level that fits your organization. Every tier includes onboarding support and a dedicated account manager.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+      <!-- Bronze -->
+      <div class="pricing-card reveal reveal-delay-1">
+        <div class="p-7">
+          <div class="tier-icon" style="background:rgba(205,127,50,0.15); border:1px solid rgba(205,127,50,0.3)">
+            <i class="fas fa-shield" style="color:#cd7f32; font-size:1.3rem"></i>
+          </div>
+          <div class="font-display text-xs font-bold tracking-widest uppercase mb-1" style="color:#cd7f32">Bronze</div>
+          <h3 class="font-display text-3xl font-bold mb-1">Essential</h3>
+          <p class="text-sm mb-6" style="color:var(--text-muted)">Foundational protection for small businesses and growing teams.</p>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-bold">Custom</span>
+            <span class="text-sm ml-1" style="color:var(--text-muted)">/ endpoint / mo</span>
+          </div>
+          <a href="mailto:support@stackpointit.com?subject=Bronze Tier Inquiry" class="block text-center py-2.5 rounded-xl font-display font-bold text-sm tracking-wider uppercase transition-all" style="background:rgba(205,127,50,0.15); color:#cd7f32; border:1px solid rgba(205,127,50,0.35);"
+            onmouseover="this.style.background='rgba(205,127,50,0.25)'" onmouseout="this.style.background='rgba(205,127,50,0.15)'">
+            Get a Quote
+          </a>
+        </div>
+        <div class="px-7 pb-7 space-y-3">
+          <div class="section-divider mb-5"></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">OS patch management (W/M/L)</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Hardware & software inventory</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Endpoint health monitoring</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Monthly compliance reports</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Business-hours email support</span></div>
+        </div>
+      </div>
+
+      <!-- Silver -->
+      <div class="pricing-card reveal reveal-delay-2">
+        <div class="p-7">
+          <div class="tier-icon" style="background:rgba(180,180,180,0.12); border:1px solid rgba(180,180,180,0.25)">
+            <i class="fas fa-shield-halved" style="color:#b0b8c0; font-size:1.3rem"></i>
+          </div>
+          <div class="font-display text-xs font-bold tracking-widest uppercase mb-1" style="color:#b0b8c0">Silver</div>
+          <h3 class="font-display text-3xl font-bold mb-1">Professional</h3>
+          <p class="text-sm mb-6" style="color:var(--text-muted)">Enhanced coverage for organizations with complex app ecosystems.</p>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-bold">Custom</span>
+            <span class="text-sm ml-1" style="color:var(--text-muted)">/ endpoint / mo</span>
+          </div>
+          <a href="mailto:support@stackpointit.com?subject=Silver Tier Inquiry" class="block text-center py-2.5 rounded-xl font-display font-bold text-sm tracking-wider uppercase transition-all" style="background:rgba(180,180,180,0.1); color:#b0b8c0; border:1px solid rgba(180,180,180,0.25);"
+            onmouseover="this.style.background='rgba(180,180,180,0.2)'" onmouseout="this.style.background='rgba(180,180,180,0.1)'">
+            Get a Quote
+          </a>
+        </div>
+        <div class="px-7 pb-7 space-y-3">
+          <div class="section-divider mb-5"></div>
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--text-muted)">Everything in Bronze, plus:</div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Third-party app patching (500+)</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Cloud software deployment</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Secure remote support (MFA + AES-256)</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Extended-hours support</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Quarterly security reviews</span></div>
+        </div>
+      </div>
+
+      <!-- Gold — Featured -->
+      <div class="pricing-card featured reveal reveal-delay-3">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="p-7">
+          <div class="tier-icon" style="background:rgba(255,184,0,0.15); border:1px solid rgba(255,184,0,0.35)">
+            <i class="fas fa-shield-cat" style="color:#f0b400; font-size:1.3rem"></i>
+          </div>
+          <div class="font-display text-xs font-bold tracking-widest uppercase mb-1" style="color:#f0b400">Gold</div>
+          <h3 class="font-display text-3xl font-bold mb-1">Advanced Security</h3>
+          <p class="text-sm mb-6" style="color:var(--text-muted)">Full-spectrum security for regulated industries and security-conscious enterprises.</p>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-bold">Custom</span>
+            <span class="text-sm ml-1" style="color:var(--text-muted)">/ endpoint / mo</span>
+          </div>
+          <a href="mailto:support@stackpointit.com?subject=Gold Tier Inquiry" class="btn-primary block text-center py-2.5 rounded-xl text-sm">
+            Get a Quote
+          </a>
+        </div>
+        <div class="px-7 pb-7 space-y-3">
+          <div class="section-divider mb-5"></div>
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--text-muted)">Everything in Silver, plus:</div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Real-time vulnerability remediation</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Continuous compliance auditing</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Autonomous endpoint management</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">24/7 threat response</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Dedicated security engineer</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Multi-framework compliance reporting</span></div>
+        </div>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card reveal reveal-delay-4" style="background:linear-gradient(160deg, #0f2035, #0d1825)">
+        <div class="p-7">
+          <div class="tier-icon" style="background:rgba(26,143,209,0.2); border:1px solid rgba(26,143,209,0.4)">
+            <i class="fas fa-building-shield" style="color:var(--accent-color); font-size:1.3rem"></i>
+          </div>
+          <div class="font-display text-xs font-bold tracking-widest uppercase mb-1" style="color:var(--accent-color)">Enterprise</div>
+          <h3 class="font-display text-3xl font-bold mb-1">Co-Managed IT</h3>
+          <p class="text-sm mb-6" style="color:var(--text-muted)">Augment your internal IT team with enterprise-grade tools and Tier 3 expertise.</p>
+          <div class="mb-6">
+            <span class="font-display text-4xl font-bold">Let's Talk</span>
+          </div>
+          <a href="mailto:support@stackpointit.com?subject=Enterprise Co-Managed IT Inquiry" class="btn-outline block text-center py-2.5 rounded-xl text-sm">
+            Contact Sales
+          </a>
+        </div>
+        <div class="px-7 pb-7 space-y-3">
+          <div class="section-divider mb-5"></div>
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--text-muted)">Built for internal IT teams:</div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Tool licensing & platform leasing</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Tier 3 escalation support</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">After-hours & weekend patching</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">Custom SLA agreements</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">On-site support options</span></div>
+          <div class="check-item"><i class="fas fa-check-circle text-sm mt-0.5"></i><span class="text-sm" style="color:var(--text-muted)">White-label reporting available</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pricing note -->
+    <p class="text-center text-sm mt-8 reveal" style="color:var(--text-muted)">
+      All plans include onboarding, a dedicated account manager, and a 30-day satisfaction guarantee. Contact <a href="mailto:support@stackpointit.com" style="color:var(--accent-color)">support@stackpointit.com</a> for volume pricing.
+    </p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ════════════════════════════════════════════
+     CTA BAND
+════════════════════════════════════════════ -->
+<section class="cta-band py-20">
+  <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+    <div class="section-label reveal" style="justify-content:center">
+      <i class="fas fa-bolt text-xs"></i> Free Assessment
+    </div>
+    <h2 class="font-display text-5xl font-bold mb-4 reveal reveal-delay-1">
+      Know Your Attack Surface <span class="text-gradient">Before They Do.</span>
+    </h2>
+    <p class="text-lg mb-8 reveal reveal-delay-2" style="color:var(--text-muted)">
+      Our complimentary vulnerability assessment provides a full risk profile of your environment — no commitment required.
+    </p>
+    <a href="mailto:support@stackpointit.com?subject=Free Vulnerability Assessment Request" class="btn-primary inline-flex items-center gap-3 px-10 py-4 rounded-xl text-lg reveal reveal-delay-3">
+      <i class="fas fa-magnifying-glass-chart"></i>
+      Schedule Your Free Assessment
+    </a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ════════════════════════════════════════════
+     TRUST & RESOURCES
+════════════════════════════════════════════ -->
+<section id="resources" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <div class="section-label reveal">Resources & Support</div>
+      <h2 class="font-display text-5xl font-bold mb-4 reveal reveal-delay-1">
+        Your Success Is Our <span class="text-gradient">Mission</span>
+      </h2>
+      <p class="max-w-2xl mx-auto text-lg reveal reveal-delay-2" style="color:var(--text-muted)">
+        From onboarding to advanced integrations, we provide the knowledge and support to maximize your investment.
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="font-display text-4xl font-bold text-gradient mb-1">98%</div>
+        <div class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">Customer Satisfaction</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="font-display text-4xl font-bold text-gradient mb-1">&lt; 4h</div>
+        <div class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">Avg. Response Time</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="font-display text-4xl font-bold text-gradient mb-1">10K+</div>
+        <div class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">Endpoints Managed</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-4">
+        <div class="font-display text-4xl font-bold text-gradient mb-1">24/7</div>
+        <div class="text-xs uppercase tracking-widest" style="color:var(--text-muted)">Live SOC Monitoring</div>
+      </div>
+    </div>
+
+    <!-- Resource Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="resource-card reveal reveal-delay-1">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-xl" style="background:rgba(26,143,209,0.15);color:var(--accent-color);border:1px solid rgba(26,143,209,0.3)">
+          <i class="fas fa-star"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mb-2">Customer Success Stories</h3>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+          Discover how organizations across healthcare, finance, and manufacturing transformed their security posture with StackPoint IT.
+        </p>
+        <a href="mailto:support@stackpointit.com?subject=Case Studies Request" class="text-sm font-bold inline-flex items-center gap-2" style="color:var(--accent-color)">
+          Read Case Studies <i class="fas fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
+      <div class="resource-card reveal reveal-delay-2">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-xl" style="background:rgba(26,143,209,0.15);color:var(--accent-color);border:1px solid rgba(26,143,209,0.3)">
+          <i class="fas fa-code"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mb-2">API Documentation</h3>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+          Integrate StackPoint IT's platform into your workflows with our fully-documented REST API, webhook events, and developer SDKs.
+        </p>
+        <a href="mailto:support@stackpointit.com?subject=API Documentation Access" class="text-sm font-bold inline-flex items-center gap-2" style="color:var(--accent-color)">
+          View Docs <i class="fas fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
+      <div class="resource-card reveal reveal-delay-3">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-xl" style="background:rgba(26,143,209,0.15);color:var(--accent-color);border:1px solid rgba(26,143,209,0.3)">
+          <i class="fas fa-video"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mb-2">Webinars & Training</h3>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+          Live and on-demand sessions covering patch management best practices, compliance walkthroughs, and emerging threat intelligence.
+        </p>
+        <a href="mailto:support@stackpointit.com?subject=Webinar Registration" class="text-sm font-bold inline-flex items-center gap-2" style="color:var(--accent-color)">
+          Register Now <i class="fas fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
+      <div class="resource-card reveal reveal-delay-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-xl" style="background:rgba(26,143,209,0.15);color:var(--accent-color);border:1px solid rgba(26,143,209,0.3)">
+          <i class="fas fa-headset"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mb-2">24/7 Expert Support</h3>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+          Our certified engineers are on standby around the clock. Critical incidents get immediate escalation — no bots, no queues, just humans who know your environment.
+        </p>
+        <a href="mailto:support@stackpointit.com" class="text-sm font-bold inline-flex items-center gap-2" style="color:var(--accent-color)">
+          Contact Support <i class="fas fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Testimonials -->
+    <div class="mt-16">
+      <h3 class="font-display text-3xl font-bold text-center mb-10 reveal">What Our Clients Say</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="service-card rounded-2xl p-7 reveal reveal-delay-1">
+          <div class="flex gap-1 mb-4">
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+            "StackPoint IT transformed our patch compliance from 62% to 99.1% within the first 60 days. The autonomous remediation alone has saved our IT team dozens of hours each week."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center font-display font-bold text-sm" style="background:rgba(26,143,209,0.2);color:var(--accent-color)">MR</div>
+            <div>
+              <div class="text-sm font-bold">Michael R.</div>
+              <div class="text-xs" style="color:var(--text-muted)">IT Director, Regional Healthcare Network</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card rounded-2xl p-7 reveal reveal-delay-2">
+          <div class="flex gap-1 mb-4">
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+            "We passed our PCI DSS audit on the first attempt after onboarding with StackPoint. Their compliance reporting made our QSA review painless. I can't imagine managing this internally."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full flex items-center justify-content:center font-display font-bold text-sm" style="background:rgba(26,143,209,0.2);color:var(--accent-color); display:flex; align-items:center; justify-content:center">SL</div>
+            <div>
+              <div class="text-sm font-bold">Sandra L.</div>
+              <div class="text-xs" style="color:var(--text-muted)">CISO, Financial Services Firm</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card rounded-2xl p-7 reveal reveal-delay-3">
+          <div class="flex gap-1 mb-4">
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+            "The co-managed Enterprise tier was exactly what our internal IT team needed. We kept control of our environment while gaining Tier 3 expertise and after-hours coverage we couldn't staff ourselves."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center font-display font-bold text-sm" style="background:rgba(26,143,209,0.2);color:var(--accent-color)">DK</div>
+            <div>
+              <div class="text-sm font-bold">David K.</div>
+              <div class="text-xs" style="color:var(--text-muted)">VP of IT, Manufacturing Enterprise</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer style="background:var(--dark-surface); border-top:1px solid var(--dark-border)">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+
+      <!-- Brand -->
+      <div class="lg:col-span-2">
+        <a href="#" class="flex items-center gap-3 mb-5 group">
+          <img src="./assets/logo.png" alt="StackPoint IT" class="h-10 w-auto" />
+          <span class="font-display text-xl font-bold">Stack<span class="text-gradient">Point</span> IT</span>
+        </a>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
+          Enterprise-grade managed IT and cybersecurity services. We protect your infrastructure so you can grow your business with confidence.
+        </p>
+        <a href="mailto:support@stackpointit.com" class="inline-flex items-center gap-2 text-sm" style="color:var(--accent-color)">
+          <i class="fas fa-envelope text-xs"></i> support@stackpointit.com
+        </a>
+        <div class="flex gap-4 mt-5">
+          <a href="mailto:support@stackpointit.com" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all text-sm" style="background:var(--dark-card);border:1px solid var(--dark-border);" onmouseover="this.style.borderColor='var(--primary-color)'" onmouseout="this.style.borderColor='var(--dark-border)'">
+            <i class="fab fa-linkedin-in" style="color:var(--text-muted)"></i>
+          </a>
+          <a href="mailto:support@stackpointit.com" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all text-sm" style="background:var(--dark-card);border:1px solid var(--dark-border);" onmouseover="this.style.borderColor='var(--primary-color)'" onmouseout="this.style.borderColor='var(--dark-border)'">
+            <i class="fab fa-x-twitter" style="color:var(--text-muted)"></i>
+          </a>
+          <a href="mailto:support@stackpointit.com" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all text-sm" style="background:var(--dark-card);border:1px solid var(--dark-border);" onmouseover="this.style.borderColor='var(--primary-color)'" onmouseout="this.style.borderColor='var(--dark-border)'">
+            <i class="fab fa-github" style="color:var(--text-muted)"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h4 class="font-display font-bold text-sm uppercase tracking-widest mb-5" style="color:var(--text-primary)">Services</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#services">Patch Management</a></li>
+          <li><a href="#services">Third-Party Patching</a></li>
+          <li><a href="#services">Vulnerability Management</a></li>
+          <li><a href="#services">Software Deployment</a></li>
+          <li><a href="#services">Endpoint Management</a></li>
+          <li><a href="#services">Secure Remote Access</a></li>
+        </ul>
+      </div>
+
+      <!-- Compliance -->
+      <div>
+        <h4 class="font-display font-bold text-sm uppercase tracking-widest mb-5" style="color:var(--text-primary)">Compliance</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#compliance">PCI DSS</a></li>
+          <li><a href="#compliance">HIPAA</a></li>
+          <li><a href="#compliance">SOC 2 Type II</a></li>
+          <li><a href="#compliance">CIS Controls</a></li>
+          <li><a href="#compliance">GLBA / FFIEC</a></li>
+          <li><a href="#compliance">NIST CSF</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <h4 class="font-display font-bold text-sm uppercase tracking-widest mb-5" style="color:var(--text-primary)">Company</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="mailto:support@stackpointit.com?subject=About StackPoint IT">About Us</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#resources">Case Studies</a></li>
+          <li><a href="#resources">Webinars</a></li>
+          <li><a href="mailto:support@stackpointit.com?subject=Careers at StackPoint IT">Careers</a></li>
+          <li><a href="mailto:support@stackpointit.com">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="section-divider mb-6"></div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs" style="color:var(--text-muted)">
+      <span>© 2025 StackPoint IT. All rights reserved.</span>
+      <div class="flex gap-6">
+        <a href="mailto:support@stackpointit.com?subject=Privacy Policy">Privacy Policy</a>
+        <a href="mailto:support@stackpointit.com?subject=Terms of Service">Terms of Service</a>
+        <a href="mailto:support@stackpointit.com?subject=Security Disclosure">Security</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<style>
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>
+<script>
+// ─── NAVBAR SCROLL ───
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ─── HAMBURGER ───
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// ─── SMOOTH SCROLL ───
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href === '#') return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ─── SCROLL REVEAL ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ─── TYPEWRITER TERMINAL ───
+const lines = [
+  'stackpoint --scan --auto-patch',
+  'stackpoint status --all',
+  'stackpoint vuln --remediate',
+  'stackpoint deploy --silent',
+];
+let lineIdx = 0, charIdx = 0, deleting = false;
+const typedEl = document.getElementById('typed-text');
+
+function typeLoop() {
+  if (!typedEl) return;
+  const current = lines[lineIdx];
+  if (!deleting) {
+    typedEl.textContent = current.slice(0, ++charIdx);
+    if (charIdx === current.length) {
+      deleting = true;
+      setTimeout(typeLoop, 1800);
+      return;
+    }
+  } else {
+    typedEl.textContent = current.slice(0, --charIdx);
+    if (charIdx === 0) {
+      deleting = false;
+      lineIdx = (lineIdx + 1) % lines.length;
+    }
+  }
+  setTimeout(typeLoop, deleting ? 45 : 80);
+}
+typeLoop();
+</script>
+
+</body>
+</html>
