@@ -1,953 +1,288 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StackPoint IT — Managed IT & Cybersecurity Solutions</title>
   <meta name="description" content="StackPoint IT delivers enterprise-grade managed IT services and cybersecurity solutions. Protect your infrastructure with real-time vulnerability management, autonomous endpoint security, and compliance-ready frameworks." />
   <link rel="icon" href="./assets/logo.png" type="image/png" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#0E8AD4',
-            'primary-light': '#2EA3F0',
-            'primary-dark': '#0A6FAA',
-            secondary: '#0C1929',
-            'secondary-light': '#132640',
-            accent: '#00D4FF',
-            surface: '#0A1220',
-            'surface-light': '#111D2E',
-            'surface-lighter': '#1A2B42',
-            'text-primary': '#E8EDF3',
-            'text-secondary': '#8899AB',
-          },
-          fontFamily: {
-            display: ['"Exo 2"', 'sans-serif'],
-            body: ['"IBM Plex Sans"', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
   <style>
-    :root {
-      --primary-color: #0E8AD4;
-      --secondary-color: #0C1929;
-      --accent-color: #00D4FF;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'IBM Plex Sans', sans-serif;
-      background: #060D17;
-      color: #E8EDF3;
-      overflow-x: hidden;
-    }
-
-    /* --- Scrollbar --- */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0A1220; }
-    ::-webkit-scrollbar-thumb { background: #0E8AD4; border-radius: 4px; }
-
-    /* --- Grid Background --- */
-    .grid-bg {
-      background-image:
-        linear-gradient(rgba(14,138,212,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(14,138,212,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    /* --- Glow Effects --- */
-    .glow-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--primary-color), var(--accent-color), var(--primary-color), transparent);
-    }
-
-    .glow-dot {
-      box-shadow: 0 0 20px var(--primary-color), 0 0 60px rgba(14,138,212,0.3);
-    }
-
-    .card-glow:hover {
-      box-shadow: 0 0 30px rgba(14,138,212,0.15), 0 4px 20px rgba(0,0,0,0.4);
-    }
-
-    /* --- Animations --- */
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-
-    @keyframes pulse-ring {
-      0% { transform: scale(1); opacity: 0.4; }
-      100% { transform: scale(1.8); opacity: 0; }
-    }
-
-    @keyframes scan-line {
-      0% { top: -2px; }
-      100% { top: 100%; }
-    }
-
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fade-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slide-right {
-      from { transform: translateX(-100%); }
-      to { transform: translateX(0); }
-    }
-
-    @keyframes count-up {
-      from { opacity: 0; transform: scale(0.5); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .animate-fade-up {
-      opacity: 0;
-      animation: fade-up 0.7s ease-out forwards;
-    }
-
-    .animate-fade-in {
-      opacity: 0;
-      animation: fade-in 0.6s ease-out forwards;
-    }
-
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-    .delay-300 { animation-delay: 0.3s; }
-    .delay-400 { animation-delay: 0.4s; }
-    .delay-500 { animation-delay: 0.5s; }
-    .delay-600 { animation-delay: 0.6s; }
-    .delay-700 { animation-delay: 0.7s; }
-
-    /* --- Scroll Reveal --- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* --- Service Card Hover Line --- */
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--primary-color), var(--accent-color), transparent);
-      transform: scaleX(0);
-      transition: transform 0.4s ease;
-    }
-    .service-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    /* --- Scan Line Effect for Hero --- */
-    .scan-overlay::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent);
-      animation: scan-line 4s linear infinite;
-      pointer-events: none;
-    }
-
-    /* --- Pricing Card Popular --- */
-    .pricing-popular {
-      border-color: var(--primary-color);
-      background: linear-gradient(180deg, rgba(14,138,212,0.08) 0%, rgba(10,18,32,1) 40%);
-    }
-
-    /* --- Compliance Scroll --- */
-    .compliance-scroll {
-      animation: scroll-x 25s linear infinite;
-    }
-    @keyframes scroll-x {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .compliance-scroll:hover {
-      animation-play-state: paused;
-    }
-
-    /* --- Nav Active --- */
-    .nav-link {
-      position: relative;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent-color);
-      transition: width 0.3s ease;
-    }
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    /* --- Button Shine --- */
-    .btn-shine {
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-shine::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -75%;
-      width: 50%;
-      height: 200%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-      transform: skewX(-20deg);
-      transition: left 0.6s ease;
-    }
-    .btn-shine:hover::after {
-      left: 125%;
-    }
-
-    /* --- Mobile Nav --- */
-    .mobile-nav {
-      transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .mobile-nav.open {
-      transform: translateX(0);
-    }
-
-    /* --- Tier Badge --- */
-    .tier-badge {
-      font-family: 'Exo 2', sans-serif;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-size: 0.65rem;
-      font-weight: 700;
-    }
+:root{--primary-color:#0E8AD4;--secondary-color:#0C1929;--accent-color:#00D4FF;--primary:#0E8AD4;--primary-light:#2EA3F0;--accent:#00D4FF;--surface:#0A1220;--surface-light:#111D2E;--surface-lighter:#1A2B42;--text-primary:#E8EDF3;--text-secondary:#8899AB;--bg:#060D17;--font-display:'Exo 2',sans-serif;--font-body:'IBM Plex Sans',sans-serif;--max-w:1280px;--radius:16px;--radius-sm:8px;--radius-xs:6px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text-primary);overflow-x:hidden;line-height:1.6;background-image:linear-gradient(rgba(14,138,212,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(14,138,212,.03) 1px,transparent 1px);background-size:60px 60px}
+a{color:inherit;text-decoration:none}img{max-width:100%;height:auto;display:block}ul{list-style:none}button{background:none;border:none;cursor:pointer;font:inherit;color:inherit}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--surface)}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px}
+.ctr{max-width:var(--max-w);margin:0 auto;padding:0 1rem}@media(min-width:640px){.ctr{padding:0 1.5rem}}@media(min-width:1024px){.ctr{padding:0 2rem}}
+.sec{padding:5rem 0}@media(min-width:1024px){.sec{padding:7rem 0}}
+.tc{text-align:center}.rel{position:relative}.flx{display:flex}.flxc{flex-direction:column}.flxw{flex-wrap:wrap}.aic{align-items:center}.ais{align-items:flex-start}.jcb{justify-content:space-between}.jcc{justify-content:center}
+.g2{gap:.5rem}.g3{gap:.75rem}.g4{gap:1rem}.g6{gap:1.5rem}.sh0{flex-shrink:0}
+.grd{display:grid;gap:1.5rem}.g2c{grid-template-columns:1fr}.g3c{grid-template-columns:1fr}.g4c{grid-template-columns:repeat(2,1fr)}.cs2{grid-column:span 1}
+@media(min-width:768px){.g2c{grid-template-columns:repeat(2,1fr)}.g3c{grid-template-columns:repeat(2,1fr)}.cs2{grid-column:span 2}.sg3{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1024px){.g3c{grid-template-columns:repeat(3,1fr)}.g4c{grid-template-columns:repeat(4,1fr)}}
+.hdn{display:none!important}
+.fd{font-family:var(--font-display)}.xs{font-size:.75rem}.sm{font-size:.875rem}.lg{font-size:1.125rem}.xl{font-size:1.25rem}
+.fw5{font-weight:500}.fw6{font-weight:600}.fw7{font-weight:700}.fw8{font-weight:800}
+.tkt{letter-spacing:-.025em}.tkw{letter-spacing:.1em}.upc{text-transform:uppercase}.lrl{line-height:1.75}
+.cp{color:var(--primary)}.cpl{color:var(--primary-light)}.ca{color:var(--accent)}.ct{color:var(--text-primary)}.cm{color:var(--text-secondary)}
+.gt{background:linear-gradient(135deg,var(--primary),var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gl{height:1px;background:linear-gradient(90deg,transparent,var(--primary),var(--accent),var(--primary),transparent)}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(14,138,212,.1);border:1px solid rgba(14,138,212,.2);border-radius:9999px;padding:.375rem 1rem;font-family:var(--font-display);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--primary)}
+.badge--a{color:var(--accent)}.badge .pd{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:700;border-radius:var(--radius-sm);transition:all .3s ease;cursor:pointer;border:none;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:skewX(-20deg);transition:left .6s ease}.btn:hover::after{left:125%}
+.bp{background:var(--primary);color:#fff;padding:1rem 2rem;font-size:1rem}.bp:hover{background:var(--primary-light);box-shadow:0 8px 30px rgba(14,138,212,.25)}
+.bo{background:transparent;color:var(--text-primary);padding:1rem 2rem;font-size:1rem;font-weight:600;border:1px solid rgba(14,138,212,.4)}.bo:hover{border-color:var(--primary);background:rgba(14,138,212,.1);color:#fff}
+.bsm{padding:.75rem 1.5rem;font-size:.875rem}.bbl{display:flex;width:100%;text-align:center}
+.ib{width:3.5rem;height:3.5rem;border-radius:12px;background:rgba(14,138,212,.1);display:flex;align-items:center;justify-content:center;transition:background .3s}.ib svg{width:1.75rem;height:1.75rem;color:var(--primary)}
+.tag{font-size:.75rem;background:var(--surface-lighter);color:var(--text-secondary);padding:.25rem .625rem;border-radius:var(--radius-xs)}
+.crd{background:rgba(17,29,46,.5);border:1px solid var(--surface-lighter);border-radius:var(--radius);padding:2rem;position:relative;transition:all .3s ease}
+.crd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--primary),var(--accent),transparent);transform:scaleX(0);transition:transform .4s ease}
+.crd:hover{border-color:rgba(14,138,212,.3);box-shadow:0 0 30px rgba(14,138,212,.1),0 4px 20px rgba(0,0,0,.3)}.crd:hover::before{transform:scaleX(1)}.crd:hover .ib{background:rgba(14,138,212,.2)}
+.crds{background:rgba(17,29,46,.3);border:1px solid var(--surface-lighter);border-radius:12px;padding:1.75rem;transition:border-color .3s}.crds:hover{border-color:rgba(14,138,212,.2)}
+.cl{display:flex;flex-direction:column;gap:.75rem}.ci{display:flex;align-items:flex-start;gap:.75rem;font-size:.875rem;color:var(--text-secondary)}.ci svg{width:1.25rem;height:1.25rem;flex-shrink:0;margin-top:2px}.clp svg{color:var(--primary)}.cla svg{color:var(--accent)}
+.infb{background:rgba(10,18,32,.5);border:1px solid var(--surface-lighter);border-radius:var(--radius-sm);padding:1rem;font-size:.75rem;color:var(--text-secondary);line-height:1.6}.infb strong{color:var(--text-primary);font-weight:500}
+.tbdg{font-family:var(--font-display);letter-spacing:.15em;text-transform:uppercase;font-size:.65rem;font-weight:700;padding:.125rem .5rem;border-radius:4px}
+.shdr{max-width:768px;margin:0 auto 4rem}@media(min-width:1024px){.shdr{margin-bottom:5rem}}.shdr h2{font-family:var(--font-display);font-weight:800;letter-spacing:-.025em;margin-bottom:1.5rem}.shdr p{color:var(--text-secondary);font-size:1.125rem;line-height:1.75}
+@keyframes fade-up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scan-line{0%{top:-2px}100%{top:100%}}
+@keyframes scroll-x{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.afu{opacity:0;animation:fade-up .7s ease-out forwards}.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d5{animation-delay:.5s}
+.rv{opacity:0;transform:translateY(40px);transition:opacity .7s ease-out,transform .7s ease-out}.rv.visible{opacity:1;transform:translateY(0)}
+#navbar{position:fixed;top:0;left:0;width:100%;z-index:50;background:rgba(6,13,23,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.ni{display:flex;align-items:center;justify-content:space-between;height:4rem}@media(min-width:1024px){.ni{height:5rem}}
+.nl{display:flex;align-items:center;gap:.75rem;flex-shrink:0}.nl img{height:2.5rem;width:auto}@media(min-width:1024px){.nl img{height:3rem}}
+.nlt{font-family:var(--font-display);font-weight:700;font-size:1.125rem;letter-spacing:-.025em}@media(max-width:639px){.nlt{display:none}}@media(min-width:1024px){.nlt{font-size:1.25rem}}
+.nls{display:none;align-items:center;gap:2rem}@media(min-width:1024px){.nls{display:flex}}
+.nla{color:var(--text-secondary);font-size:.875rem;font-weight:500;transition:color .3s;position:relative}.nla::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width .3s}.nla:hover{color:var(--text-primary)}.nla:hover::after{width:100%}
+.mt{padding:.5rem;color:var(--text-secondary);transition:color .3s}.mt:hover{color:var(--primary)}@media(min-width:1024px){.mt{display:none}}.mt svg{width:1.5rem;height:1.5rem}
+.mn{position:fixed;top:0;right:0;width:288px;height:100%;background:var(--surface);border-left:1px solid var(--surface-lighter);z-index:51;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}.mn.open{transform:translateX(0)}@media(min-width:1024px){.mn{display:none}}
+.mnh{display:flex;align-items:center;justify-content:space-between;padding:1.25rem;border-bottom:1px solid var(--surface-lighter)}.mnh img{height:2rem}
+.mnc{padding:.5rem;color:var(--text-secondary)}.mnc:hover{color:var(--primary)}.mnc svg{width:1.25rem;height:1.25rem}
+.mnb{display:flex;flex-direction:column;padding:1.25rem;gap:.25rem}
+.mlk{display:block;padding:.75rem 1rem;border-radius:var(--radius-sm);color:var(--text-secondary);font-size:.875rem;font-weight:500;transition:all .2s}.mlk:hover{color:var(--text-primary);background:var(--surface-light)}
+.mncta{padding-top:1rem;margin-top:1rem;border-top:1px solid var(--surface-lighter)}
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40}@media(min-width:1024px){.mov{display:none!important}}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:5rem;overflow:hidden}
+.hero::after{content:'';position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(0,212,255,.15),transparent);animation:scan-line 4s linear infinite;pointer-events:none}
+.hg1{position:absolute;top:25%;left:25%;width:500px;height:500px;background:rgba(14,138,212,.05);border-radius:50%;filter:blur(120px);pointer-events:none}
+.hg2{position:absolute;bottom:25%;right:25%;width:400px;height:400px;background:rgba(0,212,255,.05);border-radius:50%;filter:blur(100px);pointer-events:none}
+.hc{position:relative;z-index:10;max-width:896px;padding:5rem 0}@media(min-width:1024px){.hc{padding:8rem 0}}
+.hero h1{font-family:var(--font-display);font-size:2.25rem;font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:1.5rem}@media(min-width:640px){.hero h1{font-size:3rem}}@media(min-width:1024px){.hero h1{font-size:4.5rem}}
+.hsub{color:var(--text-secondary);font-size:1.125rem;max-width:640px;line-height:1.75;margin-bottom:2.5rem}@media(min-width:640px){.hsub{font-size:1.25rem}}
+.hbtn{display:flex;flex-direction:column;gap:1rem}@media(min-width:640px){.hbtn{flex-direction:row}}
+.ts{display:flex;flex-wrap:wrap;gap:2rem;margin-top:4rem}.tsi{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-secondary)}.tsi svg{width:1.25rem;height:1.25rem;color:var(--accent)}
+.stats{padding:4rem 0}@media(min-width:1024px){.stats{padding:5rem 0}}
+.sn{font-family:var(--font-display);font-weight:800;font-size:1.875rem;margin-bottom:.5rem}@media(min-width:640px){.sn{font-size:2.25rem}}@media(min-width:1024px){.sn{font-size:3rem}}
+.ct2{overflow:hidden;position:relative;padding:2rem 0}.cfl{position:absolute;left:0;top:0;bottom:0;width:8rem;background:linear-gradient(90deg,var(--bg),transparent);z-index:10;pointer-events:none}.cfr{position:absolute;right:0;top:0;bottom:0;width:8rem;background:linear-gradient(270deg,var(--bg),transparent);z-index:10;pointer-events:none}
+.csc{display:flex;gap:1.5rem;width:max-content;animation:scroll-x 25s linear infinite}.csc:hover{animation-play-state:paused}
+.ci2{flex-shrink:0;min-width:260px;background:rgba(17,29,46,.6);border:1px solid var(--surface-lighter);border-radius:12px;padding:1.5rem 2rem;text-align:center;transition:border-color .3s}.ci2:hover{border-color:rgba(14,138,212,.4)}
+.ci2 h3{font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:var(--primary);margin-bottom:.25rem}.ci2 p{font-size:.75rem;color:var(--text-secondary)}
+.pgrd{max-width:960px;margin:0 auto}
+.pc{background:rgba(17,29,46,.5);border:1px solid var(--surface-lighter);border-radius:var(--radius);overflow:hidden;transition:all .3s}.pc:hover{border-color:rgba(14,138,212,.2);box-shadow:0 0 30px rgba(14,138,212,.1),0 4px 20px rgba(0,0,0,.3)}
+.pcb{padding:2rem}.pcf{padding:0 2rem 2rem}
+.pcp{border:2px solid var(--primary);background:linear-gradient(180deg,rgba(14,138,212,.08) 0%,rgba(10,18,32,1) 40%)}
+.ppbar{height:3px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--primary))}
+.pplbl{background:rgba(14,138,212,.1);text-align:center;padding:.5rem;font-family:var(--font-display);font-weight:700;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary)}
+.pp{font-family:var(--font-display);font-size:2.25rem;font-weight:800;color:var(--text-primary);margin-bottom:1.5rem}.pp span{font-size:.875rem;font-weight:400;color:var(--text-secondary)}
+.pidl{font-size:.75rem;font-family:var(--font-display);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.arb{max-width:960px;margin:3rem auto 0;background:rgba(17,29,46,.3);border:1px solid var(--surface-lighter);border-radius:12px;padding:1.5rem}@media(min-width:1024px){.arb{padding:2rem}}
+.ari{text-align:center;padding:1rem;background:rgba(10,18,32,.5);border-radius:var(--radius-sm);border:1px solid var(--surface-lighter)}.ari h4{font-family:var(--font-display);font-weight:700;color:var(--primary);font-size:1.125rem;margin-bottom:.25rem}.ari p{font-size:.75rem;color:var(--text-secondary)}
+.ctag{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:rgba(14,138,212,.05);border-radius:50%;filter:blur(150px);pointer-events:none}
+.ftr{padding:3rem 0 4rem}@media(min-width:1024px){.ftr{padding:4rem 0}}
+.fg{display:grid;gap:2.5rem;margin-bottom:3rem}@media(min-width:768px){.fg{grid-template-columns:repeat(2,1fr)}}@media(min-width:1024px){.fg{grid-template-columns:1.5fr 1fr 1fr 1fr}}
+.fb p{color:var(--text-secondary);font-size:.875rem;line-height:1.75}
+.ftr h4{font-family:var(--font-display);font-weight:700;font-size:.875rem;color:var(--text-primary);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.fl{display:flex;flex-direction:column;gap:.625rem}.fl a{color:var(--text-secondary);font-size:.875rem;transition:color .3s}.fl a:hover{color:var(--primary)}
+.fbt{border-top:1px solid var(--surface-lighter);padding-top:2rem;display:flex;flex-direction:column;align-items:center;gap:1rem}@media(min-width:640px){.fbt{flex-direction:row;justify-content:space-between}}
+.fbt p{color:var(--text-secondary);font-size:.75rem}.fbl{display:flex;gap:1.5rem}.fbl a{color:var(--text-secondary);font-size:.75rem;transition:color .3s}.fbl a:hover{color:var(--primary)}
+.ism{width:1.25rem;height:1.25rem}
   </style>
 </head>
 
-<body class="grid-bg">
+<body>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300" style="background: rgba(6,13,23,0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 lg:h-20">
-        <!-- Logo -->
-        <a href="#" class="flex items-center gap-3 shrink-0">
-          <img src="./assets/logo.png" alt="StackPoint IT Logo" class="h-10 lg:h-12 w-auto" />
-          <span class="font-display font-bold text-lg lg:text-xl tracking-tight hidden sm:block">
-            <span class="text-primary-light">Stack</span><span class="text-text-primary">Point</span> <span class="text-text-secondary text-sm font-medium">IT</span>
-          </span>
-        </a>
+<nav id="navbar"><div class="ctr"><div class="ni">
+  <a href="#" class="nl"><img src="./assets/logo.png" alt="StackPoint IT Logo"/><span class="nlt"><span class="cpl">Stack</span><span class="ct">Point</span> <span class="cm sm fw5">IT</span></span></a>
+  <div class="nls">
+    <a href="#services" class="nla">Services</a><a href="#compliance" class="nla">Compliance</a><a href="#pricing" class="nla">Pricing</a><a href="#resources" class="nla">Resources</a>
+    <a href="#contact" class="btn bp bsm">Get Started <svg class="ism" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5l6 6m0 0l-6 6m6-6H4.5"/></svg></a>
+  </div>
+  <button id="mt" class="mt" aria-label="Toggle menu"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+</div></div>
+<div id="mn" class="mn"><div class="mnh"><img src="./assets/logo.png" alt="StackPoint IT"/><button id="mc" class="mnc" aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button></div><div class="mnb"><a href="#services" class="mlk">Services</a><a href="#compliance" class="mlk">Compliance</a><a href="#pricing" class="mlk">Pricing</a><a href="#resources" class="mlk">Resources</a><div class="mncta"><a href="#contact" class="btn bp bbl bsm">Get Started</a></div></div></div>
+<div id="mo" class="mov hdn"></div>
+</nav>
 
-        <!-- Desktop Links -->
-        <div class="hidden lg:flex items-center gap-8">
-          <a href="#services" class="nav-link text-text-secondary hover:text-text-primary text-sm font-medium transition-colors">Services</a>
-          <a href="#compliance" class="nav-link text-text-secondary hover:text-text-primary text-sm font-medium transition-colors">Compliance</a>
-          <a href="#pricing" class="nav-link text-text-secondary hover:text-text-primary text-sm font-medium transition-colors">Pricing</a>
-          <a href="#resources" class="nav-link text-text-secondary hover:text-text-primary text-sm font-medium transition-colors">Resources</a>
-          <a href="#contact" class="btn-shine inline-flex items-center gap-2 bg-primary hover:bg-primary-light text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors">
-            Get Started
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5l6 6m0 0l-6 6m6-6H4.5"/></svg>
-          </a>
-        </div>
+<section class="hero"><div class="hg1"></div><div class="hg2"></div><div class="ctr"><div class="hc">
+  <div class="afu badge badge--a" style="margin-bottom:2rem"><span class="pd"></span> 24/7 Threat Monitoring Active</div>
+  <h1 class="afu d1">Secure. Manage.<br/><span class="gt">Dominate Your IT.</span></h1>
+  <p class="afu d2 hsub">Proactive cybersecurity and managed IT services built for businesses without an IT department. We close your vulnerability gaps, lock down your endpoints, and keep you insurable — so you can focus on growth.</p>
+  <div class="afu d3 hbtn">
+    <a href="#pricing" class="btn bp"><svg class="ism" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg> View Pricing</a>
+    <a href="#contact" class="btn bo"><svg class="ism ca" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg> Free Vulnerability Assessment</a>
+  </div>
+  <div class="afu d5 ts">
+    <div class="tsi"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg><span>SOC 2 Compliant</span></div>
+    <div class="tsi"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg><span>HIPAA Ready</span></div>
+    <div class="tsi"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg><span>99.9% Uptime SLA</span></div>
+  </div>
+</div></div></section>
 
-        <!-- Mobile Toggle -->
-        <button id="mobile-toggle" class="lg:hidden p-2 text-text-secondary hover:text-primary transition-colors" aria-label="Toggle menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
+<div class="gl"></div>
+
+<section class="stats"><div class="ctr"><div class="grd g4c">
+  <div class="rv tc" style="padding:1.5rem"><div class="sn gt">500+</div><p class="sm cm">Endpoints Managed</p></div>
+  <div class="rv tc" style="padding:1.5rem"><div class="sn gt">99.9%</div><p class="sm cm">Uptime Guaranteed</p></div>
+  <div class="rv tc" style="padding:1.5rem"><div class="sn gt">&lt;15m</div><p class="sm cm">Avg. Response Time</p></div>
+  <div class="rv tc" style="padding:1.5rem"><div class="sn gt">24/7</div><p class="sm cm">Security Monitoring</p></div>
+</div></div></section>
+
+<div class="gl"></div>
+
+<section id="services" class="sec"><div class="ctr">
+  <div class="shdr tc">
+    <div class="rv badge" style="margin-bottom:1.5rem">What We Do</div>
+    <h2 class="rv" style="font-size:clamp(1.875rem,4vw,3rem)">Comprehensive IT Services,<br/><span class="gt">Zero Compromises</span></h2>
+    <p class="rv">From automated patching to autonomous endpoint management, we deliver a full spectrum of IT operations and security services that keep your organization ahead of threats and running at peak performance.</p>
+  </div>
+  <div class="grd g3c">
+    <div class="rv crd"><div class="ib" style="margin-bottom:1.5rem"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg></div><h3 class="fd fw7 xl ct" style="margin-bottom:.75rem">Cross-OS Patch Management</h3><p class="sm cm lrl" style="margin-bottom:1rem">Unified, automated patching across Windows, macOS, and Linux environments. Eliminate vulnerability windows with scheduled deployment policies that keep every operating system current without disrupting your workforce.</p><div class="flx flxw g2"><span class="tag">Windows</span><span class="tag">macOS</span><span class="tag">Linux</span></div></div>
+    <div class="rv crd"><div class="ib" style="margin-bottom:1.5rem"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/></svg></div><h3 class="fd fw7 xl ct" style="margin-bottom:.75rem">Third-Party Patching</h3><p class="sm cm lrl" style="margin-bottom:1rem">Automated updates for hundreds of business-critical applications. Browsers, productivity suites, communication tools, and more — all patched silently in the background with zero user intervention required.</p><div class="flx flxw g2"><span class="tag">500+ Apps</span><span class="tag">Zero-Touch</span></div></div>
+    <div class="rv crd"><div class="ib" style="margin-bottom:1.5rem"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"/></svg></div><h3 class="fd fw7 xl ct" style="margin-bottom:.75rem">Vulnerability Management</h3><p class="sm cm lrl" style="margin-bottom:1rem">Real-time detection and prioritized remediation of software vulnerabilities across your entire infrastructure. Continuous scanning with risk-scored reporting so your team focuses on what matters most.</p><div class="flx flxw g2"><span class="tag">Real-Time</span><span class="tag">Risk-Scored</span></div></div>
+    <div class="rv crd"><div class="ib" style="margin-bottom:1.5rem"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg></div><h3 class="fd fw7 xl ct" style="margin-bottom:.75rem">Software Deployment</h3><p class="sm cm lrl" style="margin-bottom:1rem">Cloud-native remote application distribution that provisions, installs, and configures software across your fleet in minutes. Roll out new tools to one device or one thousand with a single policy.</p><div class="flx flxw g2"><span class="tag">Cloud-Native</span><span class="tag">Scalable</span></div></div>
+    <div class="rv crd cs2"><div class="flx flxc g6"><div class="ib sh0"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg></div><div><h3 class="fd fw7 xl ct" style="margin-bottom:.75rem">Autonomous Endpoint Management</h3><p class="sm cm lrl" style="margin-bottom:1rem">Intelligent, self-healing endpoint management that auto-configures, secures, and maintains devices anywhere in the world. From onboarding to offboarding, every endpoint is policy-compliant, hardened against threats, and reporting back to a centralized dashboard — no matter where your team works.</p><div class="flx flxw g2"><span class="tag">Self-Healing</span><span class="tag">Zero-Touch Onboarding</span><span class="tag">Global Fleet</span></div></div></div></div>
+  </div>
+</div></section>
+
+<div class="gl"></div>
+
+<section id="compliance" class="sec" style="overflow:hidden"><div class="ctr tc" style="margin-bottom:3rem">
+  <div class="rv badge" style="margin-bottom:1.5rem">Compliance as a Service</div>
+  <h2 class="rv fd fw8 tkt" style="font-size:clamp(1.875rem,4vw,3rem);margin-bottom:1.5rem">Stay Audit-Ready,<br/><span class="gt">Every Single Day</span></h2>
+  <p class="rv cm lg" style="max-width:640px;margin:0 auto;line-height:1.75">Our managed services are engineered around the frameworks that matter to your industry. We map every patch, every hardening policy, and every remediation action to the compliance standards you need to meet.</p>
+</div>
+<div class="rv ct2"><div class="cfl"></div><div class="cfr"></div><div class="csc">
+  <div class="ci2"><h3>PCI DSS</h3><p>Payment Card Industry Data Security Standard</p></div>
+  <div class="ci2"><h3>HIPAA</h3><p>Health Insurance Portability &amp; Accountability Act</p></div>
+  <div class="ci2"><h3>SOC 2</h3><p>Service Organization Control Type 2</p></div>
+  <div class="ci2"><h3>CIS CSC</h3><p>Center for Internet Security Critical Security Controls</p></div>
+  <div class="ci2"><h3>GLBA / FFIEC</h3><p>Gramm-Leach-Bliley &amp; Federal Financial Institutions</p></div>
+  <div class="ci2"><h3>PCI DSS</h3><p>Payment Card Industry Data Security Standard</p></div>
+  <div class="ci2"><h3>HIPAA</h3><p>Health Insurance Portability &amp; Accountability Act</p></div>
+  <div class="ci2"><h3>SOC 2</h3><p>Service Organization Control Type 2</p></div>
+  <div class="ci2"><h3>CIS CSC</h3><p>Center for Internet Security Critical Security Controls</p></div>
+  <div class="ci2"><h3>GLBA / FFIEC</h3><p>Gramm-Leach-Bliley &amp; Federal Financial Institutions</p></div>
+</div></div></section>
+
+<div class="gl"></div>
+
+<section id="pricing" class="sec"><div class="ctr">
+  <div class="shdr tc">
+    <div class="rv badge" style="margin-bottom:1.5rem">Service Packages</div>
+    <h2 class="rv" style="font-size:clamp(1.875rem,4vw,3rem)">Productized Protection,<br/><span class="gt">Built to Scale With You</span></h2>
+    <p class="rv">Two clear tiers. No hidden fees. No ambiguous scope. Choose the plan that fits your business today and upgrade seamlessly as your needs evolve.</p>
+  </div>
+  <div class="pgrd grd g2c" style="align-items:start">
+    <div class="rv pc"><div class="pcb">
+      <div class="flx aic g3" style="margin-bottom:1rem"><div class="ib" style="width:2.5rem;height:2.5rem;border-radius:8px"><svg style="width:1.25rem;height:1.25rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div><div><span class="tbdg cp" style="background:rgba(14,138,212,.1)">Essentials</span><h3 class="fd fw7 xl ct">The Compliance Wedge</h3></div></div>
+      <div class="pp">$15 <span>/ device / month</span></div>
+      <p class="sm cm lrl" style="margin-bottom:2rem">Automated patch management and vulnerability scanning that closes your cyber hygiene gaps, satisfies insurance requirements, and generates the compliance proof your auditors demand — all without a helpdesk ticket in sight.</p>
+      <p class="pidl cp">Ideal for: Dental offices, Accountants, Small businesses with 10–50 users</p>
+      <ul class="cl clp" style="margin-bottom:2rem">
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Continuous vulnerability scanning (OS &amp; third-party apps)</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Automated patch deployment (Windows &amp; macOS)</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Monthly Executive Risk Report (insurance-ready)</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Hardware &amp; software asset inventory tracking</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Endpoint health monitoring &amp; alerting</li>
+      </ul>
+      <div class="infb" style="margin-bottom:1.5rem"><strong>Not included:</strong> Desktop support, software installation, user account management. This is a pure automation and reporting tier — maximum protection, minimum overhead.</div>
+    </div><div class="pcf"><a href="mailto:support@stackpointit.com?subject=Essentials%20Tier%20Inquiry" class="btn bo bbl bsm">Get Started with Essentials</a></div></div>
+
+    <div class="rv pc pcp"><div class="ppbar"></div><div class="pplbl">Most Popular</div><div class="pcb">
+      <div class="flx aic g3" style="margin-bottom:1rem"><div class="ib" style="width:2.5rem;height:2.5rem;border-radius:8px;background:rgba(0,212,255,.15)"><svg style="width:1.25rem;height:1.25rem;color:var(--accent)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg></div><div><span class="tbdg ca" style="background:rgba(0,212,255,.1)">Professional</span><h3 class="fd fw7 xl ct">Full Managed IT</h3></div></div>
+      <div class="pp">$95 <span>/ user / month</span></div>
+      <p class="sm cm lrl" style="margin-bottom:2rem">Everything in Essentials, plus the human element — unlimited remote desktop support, third-party application patching, software deployment, and managed endpoint security. Your fully outsourced IT department.</p>
+      <p class="pidl ca">Ideal for: Law firms, Consultancies, Real Estate, Professional services</p>
+      <ul class="cl cla" style="margin-bottom:2rem">
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><strong class="ct">Everything in Essentials</strong></li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Unlimited remote desktop support (9 AM – 5 PM M–F)</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Automated third-party application patching</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Remote software deployment &amp; line-of-business app packaging</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Managed antivirus &amp; endpoint detection</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Remote desktop access for work-from-home users</li>
+        <li class="ci"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Quarterly security posture review</li>
+      </ul>
+      <div class="infb" style="margin-bottom:1.5rem"><strong>On-site visits:</strong> Available at $150/hr (2-hour minimum). After-hours support billed separately or via retainer. Only business-owned devices with our agent installed are covered.</div>
+    </div><div class="pcf"><a href="mailto:support@stackpointit.com?subject=Professional%20Tier%20Inquiry" class="btn bp bbl bsm">Get Started with Professional</a></div></div>
+  </div>
+  <div class="rv arb">
+    <h3 class="fd fw7 lg ct tc" style="margin-bottom:1rem">One-Time &amp; Add-On Services</h3>
+    <div class="grd sg3" style="gap:1rem">
+      <div class="ari"><h4>Environment Remediation</h4><p>One-time deep clean to bring a neglected environment to baseline "green" before monthly service begins.</p></div>
+      <div class="ari"><h4>Cyber Insurance Assist</h4><p>We complete your carrier's technical questionnaire using real scan data — so you don't guess, you prove.</p></div>
+      <div class="ari"><h4>Hardware Refresh</h4><p>We identify aging machines from asset inventory data and handle procurement, imaging, and deployment.</p></div>
     </div>
+  </div>
+</div></section>
 
-    <!-- Mobile Nav Panel -->
-    <div id="mobile-nav" class="mobile-nav fixed top-0 right-0 w-72 h-full bg-surface border-l border-surface-lighter z-50 lg:hidden">
-      <div class="flex items-center justify-between p-5 border-b border-surface-lighter">
-        <img src="./assets/logo.png" alt="StackPoint IT" class="h-8" />
-        <button id="mobile-close" class="p-2 text-text-secondary hover:text-primary transition-colors" aria-label="Close menu">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="flex flex-col p-5 gap-1">
-        <a href="#services" class="mobile-link block py-3 px-4 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-light transition-all text-sm font-medium">Services</a>
-        <a href="#compliance" class="mobile-link block py-3 px-4 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-light transition-all text-sm font-medium">Compliance</a>
-        <a href="#pricing" class="mobile-link block py-3 px-4 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-light transition-all text-sm font-medium">Pricing</a>
-        <a href="#resources" class="mobile-link block py-3 px-4 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-light transition-all text-sm font-medium">Resources</a>
-        <div class="pt-4 mt-4 border-t border-surface-lighter">
-          <a href="#contact" class="block text-center bg-primary hover:bg-primary-light text-white font-semibold text-sm px-5 py-3 rounded-lg transition-colors">Get Started</a>
-        </div>
-      </div>
-    </div>
-    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
-  </nav>
+<div class="gl"></div>
 
-  <!-- ===== HERO ===== -->
-  <section class="relative min-h-screen flex items-center pt-20 overflow-hidden scan-overlay">
-    <!-- Background Elements -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]"></div>
-      <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]"></div>
-    </div>
+<section id="resources" class="sec"><div class="ctr">
+  <div class="shdr tc">
+    <div class="rv badge" style="margin-bottom:1.5rem">Why StackPoint IT</div>
+    <h2 class="rv" style="font-size:clamp(1.875rem,4vw,3rem)">Engineered for the<br/><span class="gt">Modern Threat Landscape</span></h2>
+  </div>
+  <div class="grd g3c">
+    <div class="rv crds"><div style="font-size:1.875rem;margin-bottom:1rem">&#9889;</div><h3 class="fd fw7 lg ct" style="margin-bottom:.5rem">Rapid Response</h3><p class="sm cm lrl">Critical vulnerabilities are triaged and patched within hours, not weeks. Our automated pipelines ensure zero-day threats get immediate attention.</p></div>
+    <div class="rv crds"><div style="font-size:1.875rem;margin-bottom:1rem">&#128270;</div><h3 class="fd fw7 lg ct" style="margin-bottom:.5rem">Full Visibility</h3><p class="sm cm lrl">Centralized dashboards with real-time endpoint telemetry. Know the patch status, security posture, and compliance state of every device at a glance.</p></div>
+    <div class="rv crds"><div style="font-size:1.875rem;margin-bottom:1rem">&#128736;</div><h3 class="fd fw7 lg ct" style="margin-bottom:.5rem">Battle-Tested Playbooks</h3><p class="sm cm lrl">Every process is documented, audited, and refined. Our runbooks draw on real-world incident response and continuous improvement cycles.</p></div>
+    <div class="rv crds"><div style="font-size:1.875rem;margin-bottom:1rem">&#127758;</div><h3 class="fd fw7 lg ct" style="margin-bottom:.5rem">Remote-First Architecture</h3><p class="sm cm lrl">Built for distributed workforces from day one. Manage and secure devices anywhere on the planet with cloud-native agent technology.</p></div>
+    <div class="rv crds"><div style="font-size:1.875rem;margin-bottom:1rem">&#128200;</div><h3 class="fd fw7 lg ct" style="margin-bottom:.5rem">Scalable by Design</h3><p class="sm cm lrl">Whether you manage 50 endpoints or 5,000, our infrastructure scales seamlessly. Add devices, users, or locations without rearchitecting.</p></div>
+    <div class="rv crds"><div style="font-size:1.875rem;margin-bottom:1rem">&#129309;</div><h3 class="fd fw7 lg ct" style="margin-bottom:.5rem">Named Account Engineers</h3><p class="sm cm lrl">You work with real people who know your environment. No ticket queues to strangers — just a dedicated engineer who understands your stack.</p></div>
+  </div>
+</div></section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative z-10">
-      <div class="max-w-4xl">
-        <!-- Badge -->
-        <div class="animate-fade-up inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-8">
-          <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-          <span class="text-accent text-xs font-semibold font-display tracking-wider uppercase">24/7 Threat Monitoring Active</span>
-        </div>
+<div class="gl"></div>
 
-        <!-- Headline -->
-        <h1 class="animate-fade-up delay-100 font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6">
-          Secure. Manage.<br/>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-light to-accent">Dominate Your IT.</span>
-        </h1>
+<section id="contact" class="sec rel"><div class="ctag"></div>
+<div class="ctr tc" style="max-width:896px;position:relative;z-index:10"><div class="rv">
+  <div class="badge" style="margin-bottom:1.5rem">Get Started</div>
+  <h2 class="fd fw8 tkt" style="font-size:clamp(1.875rem,4vw,3rem);margin-bottom:1.5rem">Discover Your Hidden<br/><span class="gt">Vulnerabilities — Free</span></h2>
+  <p class="cm lg lrl" style="max-width:640px;margin:0 auto 2.5rem">We'll deploy a lightweight scan across a sample of your machines and deliver a full Cyber Health Report within 24 hours — the same report your insurance carrier wants to see. No obligations, no pressure. Just a clear picture of your risk and a roadmap to close the gaps.</p>
+  <div class="flx jcc g4 flxc aic">
+    <a href="mailto:support@stackpointit.com?subject=Free%20Vulnerability%20Assessment%20Request" class="btn bp"><svg class="ism" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg> Request Free Assessment</a>
+    <a href="mailto:support@stackpointit.com?subject=General%20Inquiry" class="btn bo">Talk to an Engineer</a>
+  </div>
+  <p class="cm sm" style="margin-top:1.5rem">Or email us directly at <a href="mailto:support@stackpointit.com" class="cp" style="text-decoration:underline;text-underline-offset:4px">support@stackpointit.com</a></p>
+</div></div></section>
 
-        <!-- Subheadline -->
-        <p class="animate-fade-up delay-200 text-text-secondary text-lg sm:text-xl max-w-2xl leading-relaxed mb-10">
-          Enterprise-grade cybersecurity and managed IT services that keep your infrastructure bulletproof, your endpoints locked down, and your compliance airtight — so you can focus on growth.
-        </p>
+<div class="gl"></div>
 
-        <!-- CTA Buttons -->
-        <div class="animate-fade-up delay-300 flex flex-col sm:flex-row gap-4">
-          <a href="#pricing" class="btn-shine inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold text-base px-8 py-4 rounded-lg transition-all hover:shadow-lg hover:shadow-primary/25">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg>
-            View Pricing
-          </a>
-          <a href="#contact" class="group inline-flex items-center justify-center gap-2 border border-primary/40 hover:border-primary text-text-primary hover:text-white font-semibold text-base px-8 py-4 rounded-lg transition-all hover:bg-primary/10">
-            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
-            Free Vulnerability Assessment
-          </a>
-        </div>
+<footer class="ftr"><div class="ctr">
+  <div class="fg">
+    <div class="fb"><a href="#" class="nl" style="margin-bottom:1rem"><img src="./assets/logo.png" alt="StackPoint IT Logo" style="height:2.5rem"/><span class="nlt" style="display:inline"><span class="cpl">Stack</span><span class="ct">Point</span> <span class="cm sm fw5">IT</span></span></a><p>Enterprise-grade managed IT and cybersecurity services that keep your infrastructure secure, compliant, and running at peak performance.</p></div>
+    <div><h4>Services</h4><div class="fl"><a href="#services">Patch Management</a><a href="#services">Third-Party Patching</a><a href="#services">Vulnerability Management</a><a href="#services">Software Deployment</a><a href="#services">Endpoint Management</a></div></div>
+    <div><h4>Company</h4><div class="fl"><a href="#resources">About Us</a><a href="#compliance">Compliance</a><a href="#pricing">Pricing</a><a href="mailto:support@stackpointit.com">Careers</a><a href="mailto:support@stackpointit.com">Contact</a></div></div>
+    <div><h4>Get in Touch</h4><div class="fl"><a href="mailto:support@stackpointit.com" class="flx aic g2"><svg style="width:1rem;height:1rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>support@stackpointit.com</a></div></div>
+  </div>
+  <div class="fbt"><p>&copy; 2025 StackPoint IT. All rights reserved.</p><div class="fbl"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+</div></footer>
 
-        <!-- Trust Signals -->
-        <div class="animate-fade-up delay-500 mt-16 flex flex-wrap items-center gap-8 text-text-secondary text-sm">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
-            <span>SOC 2 Compliant</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
-            <span>HIPAA Ready</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
-            <span>99.9% Uptime SLA</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Divider -->
-  <div class="glow-line"></div>
-
-  <!-- ===== STATS ===== -->
-  <section class="py-16 lg:py-20 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-        <div class="reveal text-center p-6">
-          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-2">500+</div>
-          <p class="text-text-secondary text-sm">Endpoints Managed</p>
-        </div>
-        <div class="reveal text-center p-6">
-          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-2">99.9%</div>
-          <p class="text-text-secondary text-sm">Uptime Guaranteed</p>
-        </div>
-        <div class="reveal text-center p-6">
-          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-2">&lt;15m</div>
-          <p class="text-text-secondary text-sm">Avg. Response Time</p>
-        </div>
-        <div class="reveal text-center p-6">
-          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-2">24/7</div>
-          <p class="text-text-secondary text-sm">Security Monitoring</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="glow-line"></div>
-
-  <!-- ===== CORE IT SERVICES ===== -->
-  <section id="services" class="py-20 lg:py-28 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
-        <div class="reveal inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
-          <span class="text-primary text-xs font-semibold font-display tracking-wider uppercase">What We Do</span>
-        </div>
-        <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6">
-          Comprehensive IT Services,<br/>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Zero Compromises</span>
-        </h2>
-        <p class="reveal text-text-secondary text-lg leading-relaxed">
-          From automated patching to autonomous endpoint management, we deliver a full spectrum of IT operations and security services that keep your organization ahead of threats and running at peak performance.
-        </p>
-      </div>
-
-      <!-- Services Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="reveal service-card relative group bg-surface-light/50 border border-surface-lighter hover:border-primary/30 rounded-2xl p-8 transition-all duration-300 card-glow">
-          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
-          </div>
-          <h3 class="font-display font-bold text-xl mb-3 text-text-primary group-hover:text-primary-light transition-colors">Cross-OS Patch Management</h3>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">Unified, automated patching across Windows, macOS, and Linux environments. Eliminate vulnerability windows with scheduled deployment policies that keep every operating system current without disrupting your workforce.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Windows</span>
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">macOS</span>
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Linux</span>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="reveal service-card relative group bg-surface-light/50 border border-surface-lighter hover:border-primary/30 rounded-2xl p-8 transition-all duration-300 card-glow">
-          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/></svg>
-          </div>
-          <h3 class="font-display font-bold text-xl mb-3 text-text-primary group-hover:text-primary-light transition-colors">Third-Party Patching</h3>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">Automated updates for hundreds of business-critical applications. Browsers, productivity suites, communication tools, and more — all patched silently in the background with zero user intervention required.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">500+ Apps</span>
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Zero-Touch</span>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="reveal service-card relative group bg-surface-light/50 border border-surface-lighter hover:border-primary/30 rounded-2xl p-8 transition-all duration-300 card-glow">
-          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"/></svg>
-          </div>
-          <h3 class="font-display font-bold text-xl mb-3 text-text-primary group-hover:text-primary-light transition-colors">Vulnerability Management</h3>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">Real-time detection and prioritized remediation of software vulnerabilities across your entire infrastructure. Continuous scanning with risk-scored reporting so your team focuses on what matters most.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Real-Time</span>
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Risk-Scored</span>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="reveal service-card relative group bg-surface-light/50 border border-surface-lighter hover:border-primary/30 rounded-2xl p-8 transition-all duration-300 card-glow">
-          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
-          </div>
-          <h3 class="font-display font-bold text-xl mb-3 text-text-primary group-hover:text-primary-light transition-colors">Software Deployment</h3>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">Cloud-native remote application distribution that provisions, installs, and configures software across your fleet in minutes. Roll out new tools to one device or one thousand with a single policy.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Cloud-Native</span>
-            <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Scalable</span>
-          </div>
-        </div>
-
-        <!-- Card 5 (Spanning) -->
-        <div class="reveal service-card relative group bg-surface-light/50 border border-surface-lighter hover:border-primary/30 rounded-2xl p-8 transition-all duration-300 card-glow md:col-span-2">
-          <div class="flex flex-col lg:flex-row lg:items-start gap-6">
-            <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-              <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
-            </div>
-            <div>
-              <h3 class="font-display font-bold text-xl mb-3 text-text-primary group-hover:text-primary-light transition-colors">Autonomous Endpoint Management</h3>
-              <p class="text-text-secondary text-sm leading-relaxed mb-4">Intelligent, self-healing endpoint management that auto-configures, secures, and maintains devices anywhere in the world. From onboarding to offboarding, every endpoint is policy-compliant, hardened against threats, and reporting back to a centralized dashboard — no matter where your team works.</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Self-Healing</span>
-                <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Zero-Touch Onboarding</span>
-                <span class="text-xs bg-surface-lighter text-text-secondary px-2.5 py-1 rounded-md">Global Fleet</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="glow-line"></div>
-
-  <!-- ===== COMPLIANCE ===== -->
-  <section id="compliance" class="py-20 lg:py-28 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-      <div class="reveal inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
-        <span class="text-primary text-xs font-semibold font-display tracking-wider uppercase">Compliance as a Service</span>
-      </div>
-      <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6">
-        Stay Audit-Ready,<br/>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Every Single Day</span>
-      </h2>
-      <p class="reveal text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed">
-        Our managed services are engineered around the frameworks that matter to your industry. We map every patch, every hardening policy, and every remediation action to the compliance standards you need to meet.
-      </p>
-    </div>
-
-    <!-- Scrolling Compliance Banner -->
-    <div class="reveal relative py-8">
-      <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#060D17] to-transparent z-10"></div>
-      <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#060D17] to-transparent z-10"></div>
-      <div class="overflow-hidden">
-        <div class="compliance-scroll flex gap-6 w-max">
-          <!-- Set 1 -->
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">PCI DSS</div>
-            <p class="text-text-secondary text-xs">Payment Card Industry Data Security Standard</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">HIPAA</div>
-            <p class="text-text-secondary text-xs">Health Insurance Portability & Accountability Act</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">SOC 2</div>
-            <p class="text-text-secondary text-xs">Service Organization Control Type 2</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">CIS CSC</div>
-            <p class="text-text-secondary text-xs">Center for Internet Security Critical Security Controls</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">GLBA / FFIEC</div>
-            <p class="text-text-secondary text-xs">Gramm-Leach-Bliley & Federal Financial Institutions</p>
-          </div>
-          <!-- Set 2 (duplicate for seamless loop) -->
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">PCI DSS</div>
-            <p class="text-text-secondary text-xs">Payment Card Industry Data Security Standard</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">HIPAA</div>
-            <p class="text-text-secondary text-xs">Health Insurance Portability & Accountability Act</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">SOC 2</div>
-            <p class="text-text-secondary text-xs">Service Organization Control Type 2</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">CIS CSC</div>
-            <p class="text-text-secondary text-xs">Center for Internet Security Critical Security Controls</p>
-          </div>
-          <div class="flex-shrink-0 bg-surface-light/60 border border-surface-lighter rounded-xl px-8 py-6 min-w-[260px] text-center hover:border-primary/40 transition-colors">
-            <div class="font-display font-extrabold text-2xl text-primary mb-1">GLBA / FFIEC</div>
-            <p class="text-text-secondary text-xs">Gramm-Leach-Bliley & Federal Financial Institutions</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="glow-line"></div>
-
-  <!-- ===== PRICING ===== -->
-  <section id="pricing" class="py-20 lg:py-28 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
-        <div class="reveal inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
-          <span class="text-primary text-xs font-semibold font-display tracking-wider uppercase">Service Packages</span>
-        </div>
-        <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6">
-          Tiered Protection,<br/>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Built to Scale With You</span>
-        </h2>
-        <p class="reveal text-text-secondary text-lg leading-relaxed">
-          Choose the tier that fits your current needs. Upgrade anytime as your security posture matures. Every plan comes with dedicated support and a named account engineer.
-        </p>
-      </div>
-
-      <!-- Pricing Grid -->
-      <div class="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-
-        <!-- BRONZE -->
-        <div class="reveal bg-surface-light/50 border border-surface-lighter rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary/20 card-glow">
-          <div class="p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 rounded-lg bg-amber-900/30 flex items-center justify-center">
-                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd"/></svg>
-              </div>
-              <div>
-                <span class="tier-badge text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded">Bronze</span>
-                <h3 class="font-display font-bold text-xl text-text-primary">Essential</h3>
-              </div>
-            </div>
-            <p class="text-text-secondary text-sm mb-8 leading-relaxed">
-              Foundational IT hygiene for organizations that need reliable patching, inventory visibility, and proactive monitoring to stay secure.
-            </p>
-            <ul class="space-y-3 mb-8">
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Cross-OS patch management (Windows, macOS, Linux)
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Hardware &amp; software inventory reporting
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Endpoint health monitoring &amp; alerting
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Monthly patch compliance reports
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Business-hours email support
-              </li>
-            </ul>
-          </div>
-          <div class="px-8 pb-8">
-            <a href="mailto:support@stackpointit.com?subject=Bronze%20Tier%20Inquiry" class="btn-shine block text-center border border-surface-lighter hover:border-primary/40 text-text-primary hover:text-white font-semibold text-sm px-6 py-3.5 rounded-lg transition-all hover:bg-primary/10">
-              Contact for Pricing
-            </a>
-          </div>
-        </div>
-
-        <!-- SILVER (Popular) -->
-        <div class="reveal pricing-popular border-2 rounded-2xl overflow-hidden transition-all duration-300 card-glow relative">
-          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary"></div>
-          <div class="bg-primary/10 text-center py-2">
-            <span class="text-primary font-display font-bold text-xs tracking-wider uppercase">Most Popular</span>
-          </div>
-          <div class="p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 rounded-lg bg-slate-400/20 flex items-center justify-center">
-                <svg class="w-5 h-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd"/></svg>
-              </div>
-              <div>
-                <span class="tier-badge text-slate-300 bg-slate-400/10 px-2 py-0.5 rounded">Silver</span>
-                <h3 class="font-display font-bold text-xl text-text-primary">Professional</h3>
-              </div>
-            </div>
-            <p class="text-text-secondary text-sm mb-8 leading-relaxed">
-              Everything in Bronze, plus third-party patching, remote software deployment, and hands-on remote support — the full toolkit for growing teams.
-            </p>
-            <ul class="space-y-3 mb-8">
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                <span class="text-text-primary font-medium">Everything in Bronze</span>
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Automated third-party application patching
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Remote software deployment &amp; packaging
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Autonomous endpoint configuration
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Remote support with priority queue
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Quarterly security posture reviews
-              </li>
-            </ul>
-          </div>
-          <div class="px-8 pb-8">
-            <a href="mailto:support@stackpointit.com?subject=Silver%20Tier%20Inquiry" class="btn-shine block text-center bg-primary hover:bg-primary-light text-white font-bold text-sm px-6 py-3.5 rounded-lg transition-all hover:shadow-lg hover:shadow-primary/25">
-              Contact for Pricing
-            </a>
-          </div>
-        </div>
-
-        <!-- GOLD -->
-        <div class="reveal bg-surface-light/50 border border-surface-lighter rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary/20 card-glow">
-          <div class="p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 rounded-lg bg-yellow-600/20 flex items-center justify-center">
-                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd"/></svg>
-              </div>
-              <div>
-                <span class="tier-badge text-yellow-400 bg-yellow-500/10 px-2 py-0.5 rounded">Gold</span>
-                <h3 class="font-display font-bold text-xl text-text-primary">Advanced Security</h3>
-              </div>
-            </div>
-            <p class="text-text-secondary text-sm mb-8 leading-relaxed">
-              The full arsenal. Real-time vulnerability remediation, continuous compliance auditing, and dedicated security engineering — built for organizations that take zero chances.
-            </p>
-            <ul class="space-y-3 mb-8">
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                <span class="text-text-primary font-medium">Everything in Silver</span>
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Real-time vulnerability detection &amp; auto-remediation
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Continuous compliance auditing &amp; evidence collection
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                CIS benchmark hardening &amp; drift detection
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Dedicated security engineer &amp; 24/7 support
-              </li>
-              <li class="flex items-start gap-3 text-sm text-text-secondary">
-                <svg class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Executive-level risk &amp; compliance reporting
-              </li>
-            </ul>
-          </div>
-          <div class="px-8 pb-8">
-            <a href="mailto:support@stackpointit.com?subject=Gold%20Tier%20Inquiry" class="btn-shine block text-center border border-surface-lighter hover:border-yellow-500/40 text-text-primary hover:text-white font-semibold text-sm px-6 py-3.5 rounded-lg transition-all hover:bg-yellow-500/10">
-              Contact for Pricing
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="glow-line"></div>
-
-  <!-- ===== RESOURCES / WHY US ===== -->
-  <section id="resources" class="py-20 lg:py-28 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
-        <div class="reveal inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
-          <span class="text-primary text-xs font-semibold font-display tracking-wider uppercase">Why StackPoint IT</span>
-        </div>
-        <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6">
-          Engineered for the<br/>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Modern Threat Landscape</span>
-        </h2>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="reveal bg-surface-light/30 border border-surface-lighter rounded-xl p-7 hover:border-primary/20 transition-all">
-          <div class="text-3xl mb-4">&#9889;</div>
-          <h3 class="font-display font-bold text-lg mb-2 text-text-primary">Rapid Response</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">Critical vulnerabilities are triaged and patched within hours, not weeks. Our automated pipelines ensure zero-day threats get immediate attention.</p>
-        </div>
-        <div class="reveal bg-surface-light/30 border border-surface-lighter rounded-xl p-7 hover:border-primary/20 transition-all">
-          <div class="text-3xl mb-4">&#128270;</div>
-          <h3 class="font-display font-bold text-lg mb-2 text-text-primary">Full Visibility</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">Centralized dashboards with real-time endpoint telemetry. Know the patch status, security posture, and compliance state of every device at a glance.</p>
-        </div>
-        <div class="reveal bg-surface-light/30 border border-surface-lighter rounded-xl p-7 hover:border-primary/20 transition-all">
-          <div class="text-3xl mb-4">&#128736;</div>
-          <h3 class="font-display font-bold text-lg mb-2 text-text-primary">Battle-Tested Playbooks</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">Every process is documented, audited, and refined. Our runbooks draw on real-world incident response and continuous improvement cycles.</p>
-        </div>
-        <div class="reveal bg-surface-light/30 border border-surface-lighter rounded-xl p-7 hover:border-primary/20 transition-all">
-          <div class="text-3xl mb-4">&#127758;</div>
-          <h3 class="font-display font-bold text-lg mb-2 text-text-primary">Remote-First Architecture</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">Built for distributed workforces from day one. Manage and secure devices anywhere on the planet with cloud-native agent technology.</p>
-        </div>
-        <div class="reveal bg-surface-light/30 border border-surface-lighter rounded-xl p-7 hover:border-primary/20 transition-all">
-          <div class="text-3xl mb-4">&#128200;</div>
-          <h3 class="font-display font-bold text-lg mb-2 text-text-primary">Scalable by Design</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">Whether you manage 50 endpoints or 5,000, our infrastructure scales seamlessly. Add devices, users, or locations without rearchitecting.</p>
-        </div>
-        <div class="reveal bg-surface-light/30 border border-surface-lighter rounded-xl p-7 hover:border-primary/20 transition-all">
-          <div class="text-3xl mb-4">&#129309;</div>
-          <h3 class="font-display font-bold text-lg mb-2 text-text-primary">Named Account Engineers</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">You work with real people who know your environment. No ticket queues to strangers — just a dedicated engineer who understands your stack.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="glow-line"></div>
-
-  <!-- ===== CTA / CONTACT ===== -->
-  <section id="contact" class="py-20 lg:py-28 relative">
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]"></div>
-    </div>
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-      <div class="reveal">
-        <div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
-          <span class="text-primary text-xs font-semibold font-display tracking-wider uppercase">Get Started</span>
-        </div>
-        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6">
-          Ready to Fortify<br/>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Your Infrastructure?</span>
-        </h2>
-        <p class="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-          Get a free vulnerability assessment and discover where your endpoints stand. No obligations, no pressure — just a clear picture of your security posture and a roadmap to lock it down.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="mailto:support@stackpointit.com?subject=Free%20Vulnerability%20Assessment%20Request" class="btn-shine inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold text-base px-8 py-4 rounded-lg transition-all hover:shadow-lg hover:shadow-primary/25">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
-            Request Free Assessment
-          </a>
-          <a href="mailto:support@stackpointit.com?subject=General%20Inquiry" class="group inline-flex items-center justify-center gap-2 border border-primary/40 hover:border-primary text-text-primary hover:text-white font-semibold text-base px-8 py-4 rounded-lg transition-all hover:bg-primary/10">
-            Talk to an Engineer
-          </a>
-        </div>
-        <p class="text-text-secondary text-sm mt-6">
-          Or email us directly at <a href="mailto:support@stackpointit.com" class="text-primary hover:text-accent underline underline-offset-4 transition-colors">support@stackpointit.com</a>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <div class="glow-line"></div>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="py-12 lg:py-16 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-        <!-- Brand Column -->
-        <div class="lg:col-span-1">
-          <a href="#" class="flex items-center gap-3 mb-4">
-            <img src="./assets/logo.png" alt="StackPoint IT Logo" class="h-10 w-auto" />
-            <span class="font-display font-bold text-lg">
-              <span class="text-primary-light">Stack</span><span class="text-text-primary">Point</span> <span class="text-text-secondary text-sm font-medium">IT</span>
-            </span>
-          </a>
-          <p class="text-text-secondary text-sm leading-relaxed">
-            Enterprise-grade managed IT and cybersecurity services that keep your infrastructure secure, compliant, and running at peak performance.
-          </p>
-        </div>
-
-        <!-- Services -->
-        <div>
-          <h4 class="font-display font-bold text-sm text-text-primary mb-4 tracking-wider uppercase">Services</h4>
-          <ul class="space-y-2.5">
-            <li><a href="#services" class="text-text-secondary hover:text-primary text-sm transition-colors">Patch Management</a></li>
-            <li><a href="#services" class="text-text-secondary hover:text-primary text-sm transition-colors">Third-Party Patching</a></li>
-            <li><a href="#services" class="text-text-secondary hover:text-primary text-sm transition-colors">Vulnerability Management</a></li>
-            <li><a href="#services" class="text-text-secondary hover:text-primary text-sm transition-colors">Software Deployment</a></li>
-            <li><a href="#services" class="text-text-secondary hover:text-primary text-sm transition-colors">Endpoint Management</a></li>
-          </ul>
-        </div>
-
-        <!-- Company -->
-        <div>
-          <h4 class="font-display font-bold text-sm text-text-primary mb-4 tracking-wider uppercase">Company</h4>
-          <ul class="space-y-2.5">
-            <li><a href="#resources" class="text-text-secondary hover:text-primary text-sm transition-colors">About Us</a></li>
-            <li><a href="#compliance" class="text-text-secondary hover:text-primary text-sm transition-colors">Compliance</a></li>
-            <li><a href="#pricing" class="text-text-secondary hover:text-primary text-sm transition-colors">Pricing</a></li>
-            <li><a href="mailto:support@stackpointit.com" class="text-text-secondary hover:text-primary text-sm transition-colors">Careers</a></li>
-            <li><a href="mailto:support@stackpointit.com" class="text-text-secondary hover:text-primary text-sm transition-colors">Contact</a></li>
-          </ul>
-        </div>
-
-        <!-- Contact -->
-        <div>
-          <h4 class="font-display font-bold text-sm text-text-primary mb-4 tracking-wider uppercase">Get in Touch</h4>
-          <ul class="space-y-2.5">
-            <li>
-              <a href="mailto:support@stackpointit.com" class="flex items-center gap-2 text-text-secondary hover:text-primary text-sm transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
-                support@stackpointit.com
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Bottom Bar -->
-      <div class="border-t border-surface-lighter pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-text-secondary text-xs">&copy; 2025 StackPoint IT. All rights reserved.</p>
-        <div class="flex items-center gap-6">
-          <a href="#" class="text-text-secondary hover:text-primary text-xs transition-colors">Privacy Policy</a>
-          <a href="#" class="text-text-secondary hover:text-primary text-xs transition-colors">Terms of Service</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ===== JAVASCRIPT ===== -->
-  <script>
-    // --- Mobile Navigation ---
-    const mobileToggle = document.getElementById('mobile-toggle');
-    const mobileNav = document.getElementById('mobile-nav');
-    const mobileClose = document.getElementById('mobile-close');
-    const mobileOverlay = document.getElementById('mobile-overlay');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-
-    function openMobileNav() {
-      mobileNav.classList.add('open');
-      mobileOverlay.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeMobileNav() {
-      mobileNav.classList.remove('open');
-      mobileOverlay.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-
-    mobileToggle.addEventListener('click', openMobileNav);
-    mobileClose.addEventListener('click', closeMobileNav);
-    mobileOverlay.addEventListener('click', closeMobileNav);
-    mobileLinks.forEach(link => link.addEventListener('click', closeMobileNav));
-
-    // --- Navbar Scroll Effect ---
-    const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.scrollY;
-      if (currentScroll > 80) {
-        navbar.style.background = 'rgba(6,13,23,0.95)';
-        navbar.style.borderBottom = '1px solid rgba(14,138,212,0.1)';
-      } else {
-        navbar.style.background = 'rgba(6,13,23,0.7)';
-        navbar.style.borderBottom = 'none';
-      }
-      lastScroll = currentScroll;
-    });
-
-    // --- Scroll Reveal ---
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, index * 80);
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    revealElements.forEach(el => revealObserver.observe(el));
-
-    // --- Smooth Scroll ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          const offset = 80;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      });
-    });
-  </script>
-
+<script>
+const mt=document.getElementById('mt'),mn=document.getElementById('mn'),mc=document.getElementById('mc'),mo=document.getElementById('mo'),mls=document.querySelectorAll('.mlk');
+function on(){mn.classList.add('open');mo.classList.remove('hdn');document.body.style.overflow='hidden'}
+function off(){mn.classList.remove('open');mo.classList.add('hdn');document.body.style.overflow=''}
+mt.addEventListener('click',on);mc.addEventListener('click',off);mo.addEventListener('click',off);mls.forEach(l=>l.addEventListener('click',off));
+const nb=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{if(window.scrollY>80){nb.style.background='rgba(6,13,23,.95)';nb.style.borderBottomColor='rgba(14,138,212,.1)'}else{nb.style.background='rgba(6,13,23,.7)';nb.style.borderBottomColor='transparent'}});
+const rvs=document.querySelectorAll('.rv');
+const obs=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+rvs.forEach(el=>obs.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});off()})});
+</script>
 </body>
 </html>
